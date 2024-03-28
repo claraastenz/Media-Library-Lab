@@ -18,6 +18,8 @@ class Program
             logger.Info(scrubbedFile);
             MovieFile movieFile = new MovieFile(scrubbedFile);
 
+         
+
             // Main loop for user interaction
             bool exit = false;
             while (!exit)
@@ -26,6 +28,7 @@ class Program
                 Console.WriteLine("Add Movie:");
                 Console.WriteLine("1) Add Movie");
                 Console.WriteLine("2) Display All Movies");
+                Console.WriteLine("3) Find Movie");
                 Console.WriteLine("Enter to quit");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
@@ -37,6 +40,9 @@ class Program
                         break;
                     case "2":
                         DisplayAllMovies(movieFile);
+                        break;
+                    case "3":
+                        FindMovie(movieFile);
                         break;
                     case "":
                         exit = true;
@@ -103,5 +109,21 @@ class Program
         {
             Console.WriteLine(movie.Display());
         }
+    }
+
+    // Method to display all movies
+    static void FindMovie(MovieFile movieFile)
+    {
+           Console.ForegroundColor = ConsoleColor.Green;
+
+// LINQ - Where filter operator & Contains quantifier operator
+var titles = movieFile.Movies.Where(m => m.title.Contains("Car")).Select(m => m.title);
+// LINQ - Count aggregation method
+Console.WriteLine($"There are {titles.Count()} movies with \"Car\" in the title:");
+foreach(string t in titles)
+{
+    Console.WriteLine($"  {t}");
+}
+Console.ForegroundColor = ConsoleColor.White;
     }
 }
